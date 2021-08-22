@@ -1,25 +1,39 @@
-import logo from './logo.svg';
-import './App.css';
+import React,{useState} from 'react'
+import {
+  BrowserRouter,
+  Switch,
+  Route,
+  Link
+} from "react-router-dom";
+import Home from "./Home";
+import Chat from "./Chat";
+import Err from "./Err";
+import "./scss/home.scss"
+import { io } from "socket.io-client";
+
+const socket = io("http://localhost:4000");
 
 function App() {
+
+  const [Name, setName] = useState("")
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <BrowserRouter>
+        <Switch>
+          <Route exact path="/chat">
+            <Chat socket={socket} Name={Name} />
+          </Route>
+          <Route path="/error">
+            <Err />
+          </Route>
+          <Route exact path="/">
+            <Home socket = {socket} Name={Name} setName={setName} />
+          </Route>
+        </Switch>
+      </BrowserRouter>
     </div>
-  );
+  )
 }
 
-export default App;
+export default App
