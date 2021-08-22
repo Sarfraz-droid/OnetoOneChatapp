@@ -20,7 +20,7 @@ let users = [];
 const http = require("http").createServer(app);
 io = require("socket.io")(http, {
   cors: {
-    origin: ["http://localhost:3000","https://whatsappclone-5d611.web.app/"],
+    origin: ["https://whatsappclone-5d611.web.app"],
     methods: ["GET", "POST"],
   },
 });
